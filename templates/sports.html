@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports - BookMyFlick</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #141414; color: white; }
+        header { background: #1f1f1f; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 28px; font-weight: bold; color: #e50914; text-decoration: none; }
+        .logo span { color: white; }
+        nav a { color: white; text-decoration: none; margin: 0 15px; }
+        .section { padding: 40px; }
+        .section-title { font-size: 32px; margin-bottom: 30px; }
+        .section-title span { color: #e50914; }
+        .sports-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; }
+        .sport-card { background: #1f1f1f; border-radius: 12px; padding: 25px; display: flex; gap: 20px; }
+        .sport-date { background: #e50914; padding: 15px; border-radius: 10px; text-align: center; min-width: 70px; }
+        .sport-date .month { font-size: 12px; text-transform: uppercase; }
+        .sport-date .day { font-size: 28px; font-weight: bold; }
+        .sport-info h3 { font-size: 18px; margin-bottom: 10px; }
+        .sport-info p { color: #999; font-size: 14px; margin-bottom: 15px; }
+        .sport-info .btn { display: inline-block; padding: 8px 20px; background: #e50914; color: white; border-radius: 20px; text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">BookMy<span>Flick</span></a>
+        <nav>
+            <a href="/">Movies</a>
+            <a href="/events">Events</a>
+            <a href="/plays">Plays</a>
+            <a href="/sports" style="color:#e50914">Sports</a>
+            <a href="/activities">Activities</a>
+            <a href="/login">Login</a>
+        </nav>
+    </header>
+    
+    <div class="section">
+        <h2 class="section-title">Live <span>Sports</span></h2>
+        <div class="sports-grid">
+            {% for sport in sports %}
+            <div class="sport-card">
+                <div class="sport-date">
+                    <div class="month">{{ sport.date.split(',')[0].split()[0] }}</div>
+                    <div class="day">{{ sport.date.split(',')[1].strip().split()[1] }}</div>
+                </div>
+                <div class="sport-info">
+                    <h3>{{ sport.name }}</h3>
+                    <p>📍 {{ sport.location }}</p>
+                    <p style="color: #e50914; font-size: 12px; margin-top: 5px;">🏆 {{ sport.sport }}</p>
+                    <p style="color: #4CAF50; font-weight: bold; margin-top: 10px;">₹{{ sport.price }}</p>
+                    <a href="/login" class="btn">Book Now</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - BookMyFlick</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        header {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e50914;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: white;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #e50914;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .btn-logout {
+            padding: 8px 20px;
+            background: #e50914;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        /* Main Content */
+        .container {
+            padding: 120px 40px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .page-header {
+            margin-bottom: 40px;
+        }
+        
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .page-header p {
+            color: #ccc;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: #1f1f1f;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            font-size: 36px;
+            color: #e50914;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card p {
+            color: #ccc;
+            font-size: 14px;
+        }
+        
+        /* Table */
+        .table-container {
+            background: #1f1f1f;
+            border-radius: 15px;
+            padding: 30px;
+            overflow-x: auto;
+        }
+        
+        .table-container h2 {
+            margin-bottom: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        
+        th {
+            background: #0a0a0a;
+            font-weight: 600;
+            color: #ccc;
+        }
+        
+        tr:hover {
+            background: #2a2a2a;
+        }
+        
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status-confirmed {
+            background: #28a745;
+            color: white;
+        }
+        
+        .status-cancelled {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .action-btn {
+            padding: 5px 15px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        
+        .action-btn:hover {
+            background: #c82333;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 100px 20px 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            table {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">BookMy<span>Flick</span></a>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/admin">Admin</a>
+        </nav>
+        <div class="user-menu">
+            <span>Admin Panel</span>
+            <a href="/logout" class="btn-logout">Logout</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="page-header">
+            <h1>📊 Admin Dashboard</h1>
+            <p>Manage all bookings and users</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>{{ bookings|length }}</h3>
+                <p>Total Bookings</p>
+            </div>
+            <div class="stat-card">
+                <h3>{{ users }}</h3>
+                <p>Total Users</p>
+            </div>
+            <div class="stat-card">
+                <h3>₹{{ bookings|sum(attribute='total_price') }}</h3>
+                <p>Total Revenue</p>
+            </div>
+            <div class="stat-card">
+                <h3>{{ bookings|selectattr('status', 'equalto', 'Confirmed')|list|length }}</h3>
+                <p>Confirmed Bookings</p>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <h2>📋 All Bookings</h2>
+            {% if bookings %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>User ID</th>
+                        <th>Movie</th>
+                        <th>Show Time</th>
+                        <th>Seats</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                    <tr>
+                        <td>#{{ booking.id }}</td>
+                        <td>{{ booking.user_id }}</td>
+                        <td>{{ booking.movie_name }}</td>
+                        <td>{{ booking.show_time }}</td>
+                        <td>{{ booking.seats }}</td>
+                        <td>₹{{ booking.total_price }}</td>
+                        <td>
+                            <span class="status-badge {% if booking.status == 'Confirmed' %}status-confirmed{% else %}status-cancelled{% endif %}">
+                                {{ booking.status }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if booking.status == 'Confirmed' %}
+                            <a href="/cancel/{{ booking.id }}" class="action-btn">Cancel</a>
+                            {% else %}
+                            -
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty-state">
+                <p>No bookings yet!</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

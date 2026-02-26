@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - BookMyFlick</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #141414; color: white; }
+        header { background: #1f1f1f; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 28px; font-weight: bold; color: #e50914; text-decoration: none; }
+        .logo span { color: white; }
+        nav a { color: white; text-decoration: none; margin: 0 15px; }
+        .section { padding: 40px; }
+        .section-title { font-size: 32px; margin-bottom: 30px; }
+        .section-title span { color: #e50914; }
+        .events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+        .event-card { background: #1f1f1f; border-radius: 12px; overflow: hidden; }
+        .event-image { height: 180px; overflow: hidden; }
+        .event-image img { width: 100%; height: 100%; object-fit: cover; }
+        .event-info { padding: 20px; }
+        .event-date { color: #e50914; font-weight: bold; margin-bottom: 10px; }
+        .event-info h3 { font-size: 18px; margin-bottom: 10px; }
+        .event-location { color: #999; font-size: 14px; }
+        .event-price { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+        .price { font-size: 24px; color: #e50914; font-weight: bold; }
+        .btn { background: #e50914; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">BookMy<span>Flick</span></a>
+        <nav>
+            <a href="/">Movies</a>
+            <a href="/events" style="color:#e50914">Events</a>
+            <a href="/plays">Plays</a>
+            <a href="/sports">Sports</a>
+            <a href="/activities">Activities</a>
+            <a href="/login">Login</a>
+        </nav>
+    </header>
+    
+    <div class="section">
+        <h2 class="section-title">Upcoming <span>Events</span></h2>
+        <div class="events-grid">
+            {% for event in events %}
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="{{ event.image }}" alt="{{ event.name }}">
+                </div>
+                <div class="event-info">
+                    <div class="event-date">{{ event.date }}</div>
+                    <h3>{{ event.name }}</h3>
+                    <div class="event-location">📍 {{ event.location }}</div>
+                    <div class="event-price">
+                        <span class="price">₹{{ event.price }}</span>
+                        <a href="/login" class="btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

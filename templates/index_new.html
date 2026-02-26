@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookMyFlick - Movies, Events, Plays, Sports & More</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #141414;
+            color: white;
+        }
+        
+        /* Header */
+        header {
+            background: #1f1f1f;
+            padding: 12px 40px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #e50914;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+        
+        .logo span {
+            color: white;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #e50914;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 12px 20px;
+            padding-left: 45px;
+            border-radius: 30px;
+            border: none;
+            background: #333;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .search-container input:focus {
+            background: #444;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .city-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: transparent;
+            transition: background 0.3s;
+        }
+        
+        .city-selector:hover {
+            background: #333;
+        }
+        
+        nav {
+            display: flex;
+            gap: 5px;
+        }
+        
+        nav a {
+            color: #ccc;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            color: white;
+            background: #e50914;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .notifications {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .notifications-icon {
+            font-size: 20px;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e50914;
+            color: white;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 25px;
+            background: #333;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e50914;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* Banner */
+        .banner {
+            margin-top: 70px;
+            height: 350px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .banner-content {
+            text-align: center;
+            z-index: 2;
+        }
+        
+        .banner h1 {
+            font-size: 56px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        .banner p {
+            font-size: 20px;
+            color: #ccc;
+            margin-bottom: 25px;
+        }
+        
+        .banner-search {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .banner-search input {
+            flex: 1;
+            padding: 15px 25px;
+            border-radius: 30px;
+            border: none;
+            background: white;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .banner-search button {
+            padding: 15px 35px;
+            background: #e50914;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .banner-search button:hover {
+            background: #b2070f;
+        }
+        
+        /* Quick Links */
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 30px 40px;
+            background: #1f1f1f;
+            flex-wrap: wrap;
+        }
+        
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: #2a2a2a;
+            transition: all 0.3s;
+        }
+        
+        .quick-link:hover {
+            background: #e50914;
+            transform: translateY(-3px);
+        }
+        
+        .quick-link-icon {
+            font-size: 24px;
+        }
+        
+        /* Sections */
+        .section {
+            padding: 40px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .section-title span {
+            color: #e50914;
+        }
+        
+        .see-all {
+            color: #e50914;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .see-all:hover {
+            text-decoration: underline;
+        }
+        
+        /* Movies Grid */
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+        
+        .movie-card {
+            background: #1f1f1f;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(229, 9, 20, 0.2);
+        }
+        
+        .movie-poster {
+            position: relative;
+            height: 280px;
+            overflow: hidden;
+        }
+        
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .movie-rating {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .movie-rating span {
+            color: #ffc107;
+        }
+        
+        .movie-info {
+            padding: 15px;
+        }
+        
+        .movie-info h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .movie-meta {
+            display: flex;
+            gap: 10px;
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        
+        .movie-meta span {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        .movie-format {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .format {
+            padding: 3px 8px;
+            background: #333;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+        
+        .format-2d {
+            background: #28a745;
+        }
+        
+        .format-3d {
+            background: #e50914;
+        }
+        
+        /* Language Filter */
+        .language-filter {
+            display: flex;
+            gap: 10px;
+            padding: 20px 40px;
+            overflow-x: auto;
+        }
+        
+        .lang-btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid #333;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn:hover, .lang-btn.active {
+            background: #e50914;
+            border-color: #e50914;
+        }
+        
+        /* Categories */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+        
+        .category-card {
+            background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 100%);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-card:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #e50914 0%, #b2070f 100%);
+        }
+        
+        .category-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .category-card h3 {
+            font-size: 18px;
+        }
+        
+        .category-card p {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+        
+        /* Events Section */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .event-card {
+            background: #1f1f1f;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        
+        .event-image {
+            height: 160px;
+            overflow: hidden;
+        }
+        
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .event-info {
+            padding: 15px;
+        }
+        
+        .event-date {
+            color: #e50914;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .event-info h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        
+        .event-location {
+            font-size: 12px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* Offers */
+        .offers-banner {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px 40px;
+        }
+        
+        .offer-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .offer-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .offer-card:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .offer-card:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .offer-icon {
+            font-size: 40px;
+        }
+        
+        .offer-content h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .offer-content p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* Premier */
+        .premier-section {
+            background: #0d0d0d;
+            padding: 40px;
+        }
+        
+        .premier-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+        
+        .premier-card {
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .premier-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .premier-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 60px 40px 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            color: #e50914;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-section a {
+            display: block;
+            color: #999;
+            text-decoration: none;
+            margin-bottom: 10px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-bottom p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: #e50914;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 20px;
+                gap: 15px;
+            }
+            
+            .search-container {
+                display: none;
+            }
+            
+            nav {
+                display: none;
+            }
+            
+            .banner h1 {
+                font-size: 32px;
+            }
+            
+            .quick-links {
+                gap: 10px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="/" class="logo">
+            <div class="logo-icon">🎬</div>
+            BookMy<span>Flick</span>
+        </a>
+        
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search for movies, events, plays, sports...">
+        </div>
+        
+        <div class="city-selector">
+            <span>📍</span>
+            <span>Bengaluru</span>
+            <span>▼</span>
+        </div>
+        
+        <nav>
+            <a href="/" class="active">Movies</a>
+            <a href="/events">Events</a>
+            <a href="/plays">Plays</a>
+            <a href="/sports">Sports</a>
+            <a href="/activities">Activities</a>
+            <a href="/buzz">Buzz</a>
+        </nav>
+        
+        <div class="header-right">
+            <div class="notifications">
+                <span class="notifications-icon">🔔</span>
+                <span class="notification-badge">3</span>
+            </div>
+            <div class="user-profile">
+                <div class="user-avatar">U</div>
+                <a href="/login" style="color: white; text-decoration: none; padding: 8px 15px;">Sign In</a>
+                <a href="/signup" style="background: #e50914; color: white; text-decoration: none; padding: 8px 15px; border-radius: 20px;">Sign Up</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Banner -->
+    <div class="banner">
+        <div class="banner-content">
+            <h1>Book Your Experience</h1>
+            <p>Movies, Events, Plays, Sports & more</p>
+            <div class="banner-search">
+                <input type="text" id="bannerSearchInput" placeholder="Search for movies, events...">
+                <button onclick="performSearch()">Search</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Links -->
+    <div class="quick-links">
+        <a href="/" class="quick-link">
+            <span class="quick-link-icon">🎬</span>
+            <span>Movies</span>
+        </a>
+        <a href="/events" class="quick-link">
+            <span class="quick-link-icon">🎭</span>
+            <span>Events</span>
+        </a>
+        <a href="/plays" class="quick-link">
+            <span class="quick-link-icon">🎤</span>
+            <span>Plays</span>
+        </a>
+        <a href="/sports" class="quick-link">
+            <span class="quick-link-icon">⚽</span>
+            <span>Sports</span>
+        </a>
+        <a href="/activities" class="quick-link">
+            <span class="quick-link-icon">🎯</span>
+            <span>Activities</span>
+        </a>
+    </div>
+    
+    <!-- Language Filter -->
+    <div class="language-filter">
+        <button class="lang-btn active">All Languages</button>
+        <button class="lang-btn">Hindi</button>
+        <button class="lang-btn">English</button>
+        <button class="lang-btn">Kannada</button>
+        <button class="lang-btn">Telugu</button>
+        <button class="lang-btn">Tamil</button>
+        <button class="lang-btn">Malayalam</button>
+        <button class="lang-btn">Punjabi</button>
+    </div>
+    
+    <!-- Now Showing -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">Now <span>Showing</span></h2>
+            <a href="/movies" class="see-all">See All ›</a>
+        </div>
+        <div class="movies-grid">
+            {% for movie in movies %}
+            <a href="/movie/{{ movie.id }}" class="movie-card">
+                <div class="movie-poster">
+                    <img src="{{ movie.image }}" alt="{{ movie.name }}">
+                    <div class="movie-rating">
+                        <span>★</span> {{ movie.rating }}
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3>{{ movie.name }}</h3>
+                    <div class="movie-meta">
+                        <span>🕐 2D</span>
+                        <span>🎭 {{ movie.language }}</span>
+                    </div>
+                    <div class="movie-format">
+                        <span class="format format-2d">2D</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Categories -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">Browse by <span>Category</span></h2>
+        </div>
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-icon">🎬</div>
+                <h3>Movies</h3>
+                <p>Now Showing</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">🎭</div>
+                <h3>Events</h3>
+                <p>Concerts, Comedy</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">🎤</div>
+                <h3>Plays</h3>
+                <p> Theatre Shows</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">⚽</div>
+                <h3>Sports</h3>
+                <p>Cricket, Football</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">🎯</div>
+                <h3>Activities</h3>
+                <p>Adventure, Fun</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">🎪</div>
+                <h3>Amusement</h3>
+                <p>Theme Parks</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Events -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">Trending <span>Events</span></h2>
+            <a href="/events" class="see-all">See All ›</a>
+        </div>
+        <div class="events-grid">
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=400" alt="Concert">
+                </div>
+                <div class="event-info">
+                    <div class="event-date">SAT, MAR 15</div>
+                    <h3>Music Festival 2024</h3>
+                    <div class="event-location">📍 Palace Grounds, Bengaluru</div>
+                </div>
+            </div>
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=400" alt="Comedy">
+                </div>
+                <div class="event-info">
+                    <div class="event-date">SUN, MAR 20</div>
+                    <h3>Stand Up Comedy Night</h3>
+                    <div class="event-location">📍 Comics Club, Bengaluru</div>
+                </div>
+            </div>
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400" alt="Workshop">
+                </div>
+                <div class="event-info">
+                    <div class="event-date">SAT, MAR 25</div>
+                    <h3>Photography Workshop</h3>
+                    <div class="event-location">📍 Art Center, Bengaluru</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Offers -->
+    <div class="offers-banner">
+        <div class="offer-card">
+            <div class="offer-icon">🎁</div>
+            <div class="offer-content">
+                <h3>Flat ₹200 Off</h3>
+                <p>On movie tickets above ₹500</p>
+            </div>
+        </div>
+        <div class="offer-card">
+            <div class="offer-icon">🏷️</div>
+            <div class="offer-content">
+                <h3>50% Off</h3>
+                <p>On first event booking</p>
+            </div>
+        </div>
+        <div class="offer-card">
+            <div class="offer-icon">⚡</div>
+            <div class="offer-content">
+                <h3>Buy 1 Get 1 Free</h3>
+                <p>On selected plays</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Premier -->
+    <div class="premier-section">
+        <div class="section-header">
+            <h2 class="section-title">Premiere<span>s</span></h2>
+            <a href="/premiere" class="see-all">See All ›</a>
+        </div>
+        <div class="premier-grid">
+            <div class="premier-card">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=300" alt="Movie">
+            </div>
+            <div class="premier-card">
+                <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=300" alt="Movie">
+            </div>
+            <div class="premier-card">
+                <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=300" alt="Movie">
+            </div>
+            <div class="premier-card">
+                <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=300" alt="Movie">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Company</h3>
+                <a href="/about">About Us</a>
+                <a href="/contact">Contact Us</a>
+                <a href="/careers">Careers</a>
+                <a href="/press">Press</a>
+            </div>
+            <div class="footer-section">
+                <h3>Help</h3>
+                <a href="/faq">FAQ</a>
+                <a href="/support">Support</a>
+                <a href="/terms">Terms & Conditions</a>
+                <a href="/privacy">Privacy Policy</a>
+            </div>
+            <div class="footer-section">
+                <h3>BookMyFlick</h3>
+                <a href="/movies">Movies</a>
+                <a href="/events">Events</a>
+                <a href="/plays">Plays</a>
+                <a href="/sports">Sports</a>
+            </div>
+            <div class="footer-section">
+                <h3>Explore</h3>
+                <a href="/activities">Activities</a>
+                <a href="/buzz">Buzz</a>
+                <a href="/giftcards">Gift Cards</a>
+                <a href="/corporate">Corporate Booking</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BookMyFlick. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#">📘</a>
+                <a href="#">📸</a>
+                <a href="#">🐦</a>
+                <a href="#">📺</a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Language filter functionality
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Search functionality for header search
+        const searchInput = document.querySelector('.search-container input');
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.toLowerCase();
+                window.location.href = '/search?q=' + encodeURIComponent(query);
+            }
+        });
+        
+        // Search functionality for banner search
+        function performSearch() {
+            const input = document.getElementById('bannerSearchInput');
+            const query = input.value.trim();
+            if (query) {
+                window.location.href = '/search?q=' + encodeURIComponent(query);
+            }
+        }
+        
+        // Add Enter key support for banner search
+        document.getElementById('bannerSearchInput').addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    </script>
+</body>
+</html>

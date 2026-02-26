@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activities - BookMyFlick</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #141414; color: white; }
+        header { background: #1f1f1f; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 28px; font-weight: bold; color: #e50914; text-decoration: none; }
+        .logo span { color: white; }
+        nav a { color: white; text-decoration: none; margin: 0 15px; }
+        .section { padding: 40px; }
+        .section-title { font-size: 32px; margin-bottom: 30px; }
+        .section-title span { color: #e50914; }
+        .activities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .activity-card { background: #1f1f1f; border-radius: 12px; overflow: hidden; }
+        .activity-image { height: 160px; overflow: hidden; }
+        .activity-image img { width: 100%; height: 100%; object-fit: cover; }
+        .activity-info { padding: 20px; }
+        .activity-info h3 { font-size: 18px; margin-bottom: 10px; }
+        .activity-info p { color: #999; font-size: 14px; margin-bottom: 15px; }
+        .activity-price { display: flex; justify-content: space-between; align-items: center; }
+        .price { font-size: 24px; color: #e50914; font-weight: bold; }
+        .btn { background: #e50914; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">BookMy<span>Flick</span></a>
+        <nav>
+            <a href="/">Movies</a>
+            <a href="/events">Events</a>
+            <a href="/plays">Plays</a>
+            <a href="/sports">Sports</a>
+            <a href="/activities" style="color:#e50914">Activities</a>
+            <a href="/login">Login</a>
+        </nav>
+    </header>
+    
+    <div class="section">
+        <h2 class="section-title">Fun <span>Activities</span></h2>
+        <div class="activities-grid">
+            <div class="activity-card">
+                <div class="activity-image">
+                    <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=400" alt="Adventure">
+                </div>
+                <div class="activity-info">
+                    <h3>Trekking Adventure</h3>
+                    <p>📍 Munnar Hills, Kerala</p>
+                    <div class="activity-price">
+                        <span class="price">₹2500</span>
+                        <a href="/login" class="btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="activity-image">
+                    <img src="https://images.unsplash.com/photo-1530538308975-fec188a6f094?w=400" alt="Theme Park">
+                </div>
+                <div class="activity-info">
+                    <h3>Theme Park Day Pass</h3>
+                    <p>📍 Essel World, Mumbai</p>
+                    <div class="activity-price">
+                        <span class="price">₹1200</span>
+                        <a href="/login" class="btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="activity-image">
+                    <img src="https://images.unsplash.com/photo-1561489413-985b06da5bee?w=400" alt="Water Sports">
+                </div>
+                <div class="activity-info">
+                    <h3>Water Sports Package</h3>
+                    <p>📍 Goa Beach, Goa</p>
+                    <div class="activity-price">
+                        <span class="price">₹3500</span>
+                        <a href="/login" class="btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
