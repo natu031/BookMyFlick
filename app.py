@@ -6,7 +6,9 @@ app = Flask(__name__)
 app.secret_key = "bookmyflick_secret_key_123"
 
 # Use absolute path for SQLite database (works on Render)
-db_path = os.path.join(os.path.dirname(__file__), 'instance', 'database.db')
+instance_path = os.path.join(os.path.dirname(__file__), 'instance')
+os.makedirs(instance_path, exist_ok=True)
+db_path = os.path.join(instance_path, 'database.db')
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
@@ -280,10 +282,14 @@ def logout():
     return redirect("/")
 
 # =====================
+# CREATE DATABASE TABLES
+# =====================
+with app.app_context():
+    db.create_all()
+
+# =====================
 # RUN APP
 # =====================
 
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
     app.run(debug=True, host='0.0.0.0', port=80)
