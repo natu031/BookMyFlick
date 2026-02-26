@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed - BookMyFlick</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: #1f1f1f;
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: #28a745;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 50px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #28a745;
+        }
+        
+        .subtitle {
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+        
+        .ticket {
+            background: #0a0a0a;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .ticket-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .ticket-row:last-child {
+            border-bottom: none;
+        }
+        
+        .ticket-label {
+            color: #888;
+        }
+        
+        .ticket-value {
+            font-weight: bold;
+        }
+        
+        .booking-id {
+            font-size: 24px;
+            color: #e50914;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .btn-primary {
+            background: #e50914;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✓</div>
+        <h1>Booking Confirmed!</h1>
+        <p class="subtitle">Your movie tickets have been booked successfully</p>
+        
+        <div class="ticket">
+            <div class="ticket-row">
+                <span class="ticket-label">Movie</span>
+                <span class="ticket-value">{{ booking.movie_name }}</span>
+            </div>
+            <div class="ticket-row">
+                <span class="ticket-label">Show Time</span>
+                <span class="ticket-value">{{ booking.show_time }}</span>
+            </div>
+            <div class="ticket-row">
+                <span class="ticket-label">Seats</span>
+                <span class="ticket-value">{{ booking.seats }}</span>
+            </div>
+            <div class="ticket-row">
+                <span class="ticket-label">Total Price</span>
+                <span class="ticket-value">₹{{ booking.total_price }}</span>
+            </div>
+            <div class="ticket-row">
+                <span class="ticket-label">Status</span>
+                <span class="ticket-value" style="color: #28a745;">{{ booking.status }}</span>
+            </div>
+        </div>
+        
+        <div class="booking-id">Booking ID: #{{ booking.id }}</div>
+        
+        <div class="buttons">
+            <a href="/dashboard" class="btn btn-primary">View Bookings</a>
+            <a href="/" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>
